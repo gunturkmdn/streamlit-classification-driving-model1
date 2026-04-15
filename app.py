@@ -37,6 +37,14 @@ if model is None:
 
 st.success("✅ Model berhasil dimuat!")
 
+# Cek library yang diperlukan untuk Excel
+try:
+    import openpyxl
+    has_openpyxl = True
+except ImportError:
+    has_openpyxl = False
+    st.warning("⚠️ Library 'openpyxl' tidak terinstall. Untuk membaca file Excel, silakan install dengan: pip install openpyxl")
+
 # Sidebar untuk upload file
 st.sidebar.header("📂 Upload Data Sensor")
 st.sidebar.markdown("Upload file CSV atau Excel yang berisi data sensor dengan 60 fitur:")
@@ -64,58 +72,67 @@ uploaded_file = st.sidebar.file_uploader(
 # Informasi format file yang diharapkan
 with st.sidebar.expander("📋 Format File yang Diharapkan"):
     st.markdown("""
-    **Format 1 (Standar):**
+    **Rekomendasi: Gunakan format CSV untuk menghindari error library**
+    
+    **Format 1 (CSV - Standar):**
     - Baris pertama: Nama kolom (60 fitur)
     - Baris berikutnya: Data per pengendara
     
-    **Format 2 (Transpose - seperti contoh):**
+    **Format 2 (Excel - Transpose seperti contoh):**
     - Kolom pertama: Nama fitur
     - Baris pertama: Header (bisa diabaikan)
     - Baris kedua: Nilai fitur
     
-    **Format 3 (Multiple rows):**
-    - Beberapa baris data, masing-masing baris adalah satu sampel
+    **Cara konversi Excel ke CSV:**
+    1. Buka file Excel
+    2. File → Save As → Pilih CSV UTF-8
+    3. Upload file CSV
     """)
 
 # Fungsi untuk membaca file dengan berbagai format
 def load_data(uploaded_file):
     try:
-        if uploaded_file.name.endswith('.csv'):
+        file_extension = uploaded_file.name.split('.')[-1].lower()
+        
+        if file_extension == 'csv':
+            # Baca file CSV
             df = pd.read_csv(uploaded_file)
-        else:
-            df = pd.read_excel(uploaded_file, header=None)  # Baca tanpa header dulu
-        
-        # Cek apakah file dalam format transpose (baris pertama berisi nama fitur)
-        if df.shape[0] == 2 and df.shape[1] > 60:
-            # Format: baris pertama = nama fitur, baris kedua = nilai
-            st.info("📐 Mendeteksi format file transpose (2 baris x N kolom)")
-            feature_names_file = df.iloc[0].values
-            values = df.iloc[1].values
-            
-            # Buat dataframe dengan 1 baris
-            df_result = pd.DataFrame([values], columns=feature_names_file)
-            return df_result
-        
-        # Cek apakah file dalam format transpose vertical (kolom pertama berisi nama fitur)
-        elif df.shape[1] == 2 and df.shape[0] > 60:
-            # Format: kolom pertama = nama fitur, kolom kedua = nilai
-            st.info("📐 Mendeteksi format file transpose vertical (N baris x 2 kolom)")
-            feature_names_file = df.iloc[:, 0].values
-            values = df.iloc[:, 1].values
-            
-            # Buat dataframe dengan 1 baris
-            df_result = pd.DataFrame([values], columns=feature_names_file)
-            return df_result
-        
-        else:
-            # Format standar (baris pertama header)
-            # Baca ulang dengan header=0
-            if uploaded_file.name.endswith('.csv'):
-                df = pd.read_csv(uploaded_file)
-            else:
-                df = pd.read_excel(uploaded_file)
-            
             return df
+            
+        elif file_extension in ['xlsx', 'xls']:
+            # Cek apakah openpyxl tersedia
+            if not has_openpyxl:
+                st.error("❌ Library 'openpyxl' tidak terinstall. Silakan install dengan: pip install openpyxl")
+                st.info("💡 Atau konversi file Excel ke CSV terlebih dahulu untuk menghindari error ini")
+                return None
+            
+            # Coba baca Excel dengan berbagai metode
+            try:
+                # Metode 1: Baca tanpa header terlebih dahulu
+                df = pd.read_excel(uploaded_file, header=None, engine='openpyxl')
+                
+                # Cek apakah file dalam format transpose (baris pertama berisi nama fitur)
+                if df.shape[0] == 2 and df.shape[1] > 60:
+                    # Format: baris pertama = nama fitur, baris kedua = nilai
+                    st.info("📐 Mendeteksi format file transpose (2 baris x N kolom)")
+                    feature_names_file = df.iloc[0].values
+                    values = df.iloc[1].values
+                    
+                    # Buat dataframe dengan 1 baris
+                    df_result = pd.DataFrame([values], columns=feature_names_file)
+                    return df_result
+                
+                # Metode 2: Coba baca dengan header di baris pertama
+                df = pd.read_excel(uploaded_file, header=0, engine='openpyxl')
+                return df
+                
+            except Exception as e:
+                st.error(f"Error membaca Excel: {e}")
+                return None
+        
+        else:
+            st.error(f"Format file {file_extension} tidak didukung")
+            return None
             
     except Exception as e:
         st.error(f"Error membaca file: {e}")
@@ -124,7 +141,10 @@ def load_data(uploaded_file):
 # Fungsi untuk memeriksa dan mengkonversi tipe data
 def convert_numeric(df):
     for col in df.columns:
-        df[col] = pd.to_numeric(df[col], errors='coerce')
+        try:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+        except:
+            pass
     return df
 
 # Fungsi untuk validasi fitur
@@ -136,6 +156,10 @@ def validate_features(df):
     missing_features = required_columns - df_columns
     if missing_features:
         st.error(f"❌ Kolom yang hilang: {list(missing_features)[:5]}... (total {len(missing_features)} kolom)")
+        
+        # Tampilkan kolom yang ada untuk debugging
+        st.info("Kolom yang tersedia dalam file:")
+        st.write(list(df.columns)[:10], "...")
         return False
     
     # Cek apakah ada kolom yang tidak diperlukan
@@ -188,10 +212,6 @@ with col1:
                 st.session_state['original_data'] = df
             else:
                 st.session_state['data'] = None
-                
-                # Tampilkan kolom yang ada untuk debugging
-                st.warning("Kolom yang tersedia dalam file:")
-                st.write(list(df.columns)[:10], "...")
         else:
             st.session_state['data'] = None
     else:
@@ -297,7 +317,6 @@ with col2:
                     
                 except Exception as e:
                     st.error(f"Error saat melakukan prediksi: {e}")
-                    st.error("Detail error untuk debugging:", exc_info=True)
         else:
             st.warning("⚠️ Silakan upload file terlebih dahulu")
     
