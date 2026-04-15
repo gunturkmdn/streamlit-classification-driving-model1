@@ -21,21 +21,13 @@ def load_model():
         with open('model_klasifikasi_pengendara.pkl', 'rb') as file:
             model = pickle.load(file)
         return model
-    except Exception as e1:
-        st.warning(f"Method 1 failed: {e1}")
+    except Exception:
         try:
-            with open('model_klasifikasi_pengendara.pkl', 'rb') as file:
-                model = pickle.load(file, encoding='latin1')
+            import joblib
+            model = joblib.load('model_klasifikasi_pengendara.pkl')
             return model
-        except Exception as e2:
-            st.warning(f"Method 2 failed: {e2}")
-            try:
-                import joblib
-                model = joblib.load('model_klasifikasi_pengendara.pkl')
-                return model
-            except Exception as e3:
-                st.error(f"All loading methods failed: {e3}")
-                return None
+        except Exception:
+            return None
 
 model = load_model()
 
