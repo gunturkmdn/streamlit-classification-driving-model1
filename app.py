@@ -45,176 +45,235 @@ if model is None:
 
 st.success("✅ Model berhasil dimuat!")
 
-# Sidebar untuk input data
-st.sidebar.header("📊 Input Data Sensor")
+# Sidebar untuk upload file
+st.sidebar.header("📂 Upload Data Sensor")
+st.sidebar.markdown("Upload file CSV atau Excel yang berisi data sensor dengan 60 fitur:")
 
-st.sidebar.markdown("### 📈 Sensor Accelerometer")
-acc_mean_x = st.sidebar.number_input("Acc Mean X", value=0.0, format="%.6f")
-acc_mean_y = st.sidebar.number_input("Acc Mean Y", value=0.0, format="%.6f")
-acc_mean_z = st.sidebar.number_input("Acc Mean Z", value=0.0, format="%.6f")
-acc_cov_x = st.sidebar.number_input("Acc Cov X", value=0.0, format="%.6f")
-acc_cov_y = st.sidebar.number_input("Acc Cov Y", value=0.0, format="%.6f")
-acc_cov_z = st.sidebar.number_input("Acc Cov Z", value=0.0, format="%.6f")
-acc_skew_x = st.sidebar.number_input("Acc Skew X", value=0.0, format="%.6f")
-acc_skew_y = st.sidebar.number_input("Acc Skew Y", value=0.0, format="%.6f")
-acc_skew_z = st.sidebar.number_input("Acc Skew Z", value=0.0, format="%.6f")
-acc_kurt_x = st.sidebar.number_input("Acc Kurt X", value=0.0, format="%.6f")
-acc_kurt_y = st.sidebar.number_input("Acc Kurt Y", value=0.0, format="%.6f")
-acc_kurt_z = st.sidebar.number_input("Acc Kurt Z", value=0.0, format="%.6f")
-acc_sum_x = st.sidebar.number_input("Acc Sum X", value=0.0, format="%.6f")
-acc_sum_y = st.sidebar.number_input("Acc Sum Y", value=0.0, format="%.6f")
-acc_sum_z = st.sidebar.number_input("Acc Sum Z", value=0.0, format="%.6f")
-acc_min_x = st.sidebar.number_input("Acc Min X", value=0.0, format="%.6f")
-acc_min_y = st.sidebar.number_input("Acc Min Y", value=0.0, format="%.6f")
-acc_min_z = st.sidebar.number_input("Acc Min Z", value=0.0, format="%.6f")
-acc_max_x = st.sidebar.number_input("Acc Max X", value=0.0, format="%.6f")
-acc_max_y = st.sidebar.number_input("Acc Max Y", value=0.0, format="%.6f")
-acc_max_z = st.sidebar.number_input("Acc Max Z", value=0.0, format="%.6f")
-acc_var_x = st.sidebar.number_input("Acc Var X", value=0.0, format="%.6f")
-acc_var_y = st.sidebar.number_input("Acc Var Y", value=0.0, format="%.6f")
-acc_var_z = st.sidebar.number_input("Acc Var Z", value=0.0, format="%.6f")
-acc_median_x = st.sidebar.number_input("Acc Median X", value=0.0, format="%.6f")
-acc_median_y = st.sidebar.number_input("Acc Median Y", value=0.0, format="%.6f")
-acc_median_z = st.sidebar.number_input("Acc Median Z", value=0.0, format="%.6f")
-acc_std_x = st.sidebar.number_input("Acc Std X", value=0.0, format="%.6f")
-acc_std_y = st.sidebar.number_input("Acc Std Y", value=0.0, format="%.6f")
-acc_std_z = st.sidebar.number_input("Acc Std Z", value=0.0, format="%.6f")
-
-st.sidebar.markdown("### 🌀 Sensor Gyroscope")
-gyro_mean_x = st.sidebar.number_input("Gyro Mean X", value=0.0, format="%.6f")
-gyro_mean_y = st.sidebar.number_input("Gyro Mean Y", value=0.0, format="%.6f")
-gyro_mean_z = st.sidebar.number_input("Gyro Mean Z", value=0.0, format="%.6f")
-gyro_cov_x = st.sidebar.number_input("Gyro Cov X", value=0.0, format="%.6f")
-gyro_cov_y = st.sidebar.number_input("Gyro Cov Y", value=0.0, format="%.6f")
-gyro_cov_z = st.sidebar.number_input("Gyro Cov Z", value=0.0, format="%.6f")
-gyro_skew_x = st.sidebar.number_input("Gyro Skew X", value=0.0, format="%.6f")
-gyro_skew_y = st.sidebar.number_input("Gyro Skew Y", value=0.0, format="%.6f")
-gyro_skew_z = st.sidebar.number_input("Gyro Skew Z", value=0.0, format="%.6f")
-gyro_sum_x = st.sidebar.number_input("Gyro Sum X", value=0.0, format="%.6f")
-gyro_sum_y = st.sidebar.number_input("Gyro Sum Y", value=0.0, format="%.6f")
-gyro_sum_z = st.sidebar.number_input("Gyro Sum Z", value=0.0, format="%.6f")
-gyro_kurt_x = st.sidebar.number_input("Gyro Kurt X", value=0.0, format="%.6f")
-gyro_kurt_y = st.sidebar.number_input("Gyro Kurt Y", value=0.0, format="%.6f")
-gyro_kurt_z = st.sidebar.number_input("Gyro Kurt Z", value=0.0, format="%.6f")
-gyro_min_x = st.sidebar.number_input("Gyro Min X", value=0.0, format="%.6f")
-gyro_min_y = st.sidebar.number_input("Gyro Min Y", value=0.0, format="%.6f")
-gyro_min_z = st.sidebar.number_input("Gyro Min Z", value=0.0, format="%.6f")
-gyro_max_x = st.sidebar.number_input("Gyro Max X", value=0.0, format="%.6f")
-gyro_max_y = st.sidebar.number_input("Gyro Max Y", value=0.0, format="%.6f")
-gyro_max_z = st.sidebar.number_input("Gyro Max Z", value=0.0, format="%.6f")
-gyro_var_x = st.sidebar.number_input("Gyro Var X", value=0.0, format="%.6f")
-gyro_var_y = st.sidebar.number_input("Gyro Var Y", value=0.0, format="%.6f")
-gyro_var_z = st.sidebar.number_input("Gyro Var Z", value=0.0, format="%.6f")
-gyro_median_x = st.sidebar.number_input("Gyro Median X", value=0.0, format="%.6f")
-gyro_median_y = st.sidebar.number_input("Gyro Median Y", value=0.0, format="%.6f")
-gyro_median_z = st.sidebar.number_input("Gyro Median Z", value=0.0, format="%.6f")
-gyro_std_x = st.sidebar.number_input("Gyro Std X", value=0.0, format="%.6f")
-gyro_std_y = st.sidebar.number_input("Gyro Std Y", value=0.0, format="%.6f")
-gyro_std_z = st.sidebar.number_input("Gyro Std Z", value=0.0, format="%.6f")
-
-# Buat array fitur (60 fitur: 30 Acc + 30 Gyro)
-features = [
-    acc_mean_x, acc_mean_y, acc_mean_z,
-    acc_cov_x, acc_cov_y, acc_cov_z,
-    acc_skew_x, acc_skew_y, acc_skew_z,
-    acc_kurt_x, acc_kurt_y, acc_kurt_z,
-    acc_sum_x, acc_sum_y, acc_sum_z,
-    acc_min_x, acc_min_y, acc_min_z,
-    acc_max_x, acc_max_y, acc_max_z,
-    acc_var_x, acc_var_y, acc_var_z,
-    acc_median_x, acc_median_y, acc_median_z,
-    acc_std_x, acc_std_y, acc_std_z,
-    gyro_mean_x, gyro_mean_y, gyro_mean_z,
-    gyro_cov_x, gyro_cov_y, gyro_cov_z,
-    gyro_skew_x, gyro_skew_y, gyro_skew_z,
-    gyro_sum_x, gyro_sum_y, gyro_sum_z,
-    gyro_kurt_x, gyro_kurt_y, gyro_kurt_z,
-    gyro_min_x, gyro_min_y, gyro_min_z,
-    gyro_max_x, gyro_max_y, gyro_max_z,
-    gyro_var_x, gyro_var_y, gyro_var_z,
-    gyro_median_x, gyro_median_y, gyro_median_z,
-    gyro_std_x, gyro_std_y, gyro_std_z
+# Daftar nama fitur yang diharapkan
+feature_names = [
+    "AccMeanX", "AccMeanY", "AccMeanZ", "AccCovX", "AccCovY", "AccCovZ",
+    "AccSkewX", "AccSkewY", "AccSkewZ", "AccKurtX", "AccKurtY", "AccKurtZ",
+    "AccSumX", "AccSumY", "AccSumZ", "AccMinX", "AccMinY", "AccMinZ",
+    "AccMaxX", "AccMaxY", "AccMaxZ", "AccVarX", "AccVarY", "AccVarZ",
+    "AccMedianX", "AccMedianY", "AccMedianZ", "AccStdX", "AccStdY", "AccStdZ",
+    "GyroMeanX", "GyroMeanY", "GyroMeanZ", "GyroCovX", "GyroCovY", "GyroCovZ",
+    "GyroSkewX", "GyroSkewY", "GyroSkewZ", "GyroSumX", "GyroSumY", "GyroSumZ",
+    "GyroKurtX", "GyroKurtY", "GyroKurtZ", "GyroMinX", "GyroMinY", "GyroMinZ",
+    "GyroMaxX", "GyroMaxY", "GyroMaxZ", "GyroVarX", "GyroVarY", "GyroVarZ",
+    "GyroMedianX", "GyroMedianY", "GyroMedianZ", "GyroStdX", "GyroStdY", "GyroStdZ"
 ]
+
+uploaded_file = st.sidebar.file_uploader(
+    "Pilih file (CSV atau Excel)", 
+    type=['csv', 'xlsx', 'xls'],
+    help="Upload file dengan 60 kolom fitur sesuai dengan yang diharapkan model"
+)
+
+# Informasi format file yang diharapkan
+with st.sidebar.expander("📋 Format File yang Diharapkan"):
+    st.markdown("""
+    **File harus memiliki 60 kolom dengan nama:**
+    
+    **Accelerometer (30 kolom):**
+    - AccMeanX, AccMeanY, AccMeanZ
+    - AccCovX, AccCovY, AccCovZ
+    - AccSkewX, AccSkewY, AccSkewZ
+    - AccKurtX, AccKurtY, AccKurtZ
+    - AccSumX, AccSumY, AccSumZ
+    - AccMinX, AccMinY, AccMinZ
+    - AccMaxX, AccMaxY, AccMaxZ
+    - AccVarX, AccVarY, AccVarZ
+    - AccMedianX, AccMedianY, AccMedianZ
+    - AccStdX, AccStdY, AccStdZ
+    
+    **Gyroscope (30 kolom):**
+    - GyroMeanX, GyroMeanY, GyroMeanZ
+    - GyroCovX, GyroCovY, GyroCovZ
+    - GyroSkewX, GyroSkewY, GyroSkewZ
+    - GyroKurtX, GyroKurtY, GyroKurtZ
+    - GyroSumX, GyroSumY, GyroSumZ
+    - GyroMinX, GyroMinY, GyroMinZ
+    - GyroMaxX, GyroMaxY, GyroMaxZ
+    - GyroVarX, GyroVarY, GyroVarZ
+    - GyroMedianX, GyroMedianY, GyroMedianZ
+    - GyroStdX, GyroStdY, GyroStdZ
+    """)
+
+# Fungsi untuk membaca file berdasarkan tipe
+def load_data(uploaded_file):
+    try:
+        if uploaded_file.name.endswith('.csv'):
+            df = pd.read_csv(uploaded_file)
+        else:
+            df = pd.read_excel(uploaded_file)
+        return df
+    except Exception as e:
+        st.error(f"Error membaca file: {e}")
+        return None
+
+# Fungsi untuk validasi fitur
+def validate_features(df):
+    missing_features = [f for f in feature_names if f not in df.columns]
+    if missing_features:
+        st.error(f"❌ Kolom yang hilang: {missing_features[:5]}... (total {len(missing_features)} kolom)")
+        return False
+    
+    extra_features = [f for f in df.columns if f not in feature_names]
+    if extra_features:
+        st.warning(f"⚠️ Kolom tambahan yang diabaikan: {extra_features[:5]}... (total {len(extra_features)} kolom)")
+    
+    return True
 
 # Main content
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.subheader("📋 Ringkasan Input")
+    st.subheader("📋 Data yang Diupload")
     
-    feature_names = [
-        "AccMeanX", "AccMeanY", "AccMeanZ", "AccCovX", "AccCovY", "AccCovZ",
-        "AccSkewX", "AccSkewY", "AccSkewZ", "AccKurtX", "AccKurtY", "AccKurtZ",
-        "AccSumX", "AccSumY", "AccSumZ", "AccMinX", "AccMinY", "AccMinZ",
-        "AccMaxX", "AccMaxY", "AccMaxZ", "AccVarX", "AccVarY", "AccVarZ",
-        "AccMedianX", "AccMedianY", "AccMedianZ", "AccStdX", "AccStdY", "AccStdZ",
-        "GyroMeanX", "GyroMeanY", "GyroMeanZ", "GyroCovX", "GyroCovY", "GyroCovZ",
-        "GyroSkewX", "GyroSkewY", "GyroSkewZ", "GyroSumX", "GyroSumY", "GyroSumZ",
-        "GyroKurtX", "GyroKurtY", "GyroKurtZ", "GyroMinX", "GyroMinY", "GyroMinZ",
-        "GyroMaxX", "GyroMaxY", "GyroMaxZ", "GyroVarX", "GyroVarY", "GyroVarZ",
-        "GyroMedianX", "GyroMedianY", "GyroMedianZ", "GyroStdX", "GyroStdY", "GyroStdZ"
-    ]
-    
-    df_input = pd.DataFrame({
-        "Fitur": feature_names,
-        "Nilai": features
-    })
-    st.dataframe(df_input, use_container_width=True, height=400)
+    if uploaded_file is not None:
+        df = load_data(uploaded_file)
+        
+        if df is not None:
+            # Validasi fitur
+            if validate_features(df):
+                # Ambil hanya kolom yang diperlukan (urutkan sesuai feature_names)
+                df_features = df[feature_names].copy()
+                
+                st.info(f"✅ Data berhasil dimuat: {df_features.shape[0]} baris, {df_features.shape[1]} kolom")
+                
+                # Tampilkan data
+                st.dataframe(df_features.head(10), use_container_width=True)
+                
+                # Simpan ke session state untuk prediksi
+                st.session_state['data'] = df_features
+                st.session_state['original_data'] = df
+            else:
+                st.session_state['data'] = None
+    else:
+        st.info("📂 Silakan upload file CSV atau Excel di sidebar untuk memulai klasifikasi")
+        st.session_state['data'] = None
 
 with col2:
     st.subheader("🎯 Prediksi")
     
-    if st.button("🔍 Klasifikasikan", type="primary", use_container_width=True):
-        input_array = np.array(features).reshape(1, -1)
-        
-        try:
-            prediction = model.predict(input_array)
+    # Tentukan label kelas
+    class_labels = {
+        0: "🚗 Pengendara Normal",
+        1: "⚠️ Pengendara Agresif",
+        2: "😴 Pengendara Mengantuk",
+        3: "📱 Pengendara Terdistraksi"
+    }
+    
+    colors = {
+        0: "#2ecc71",  # Hijau
+        1: "#e74c3c",  # Merah
+        2: "#f39c12",  # Oranye
+        3: "#9b59b6"   # Ungu
+    }
+    
+    if st.button("🔍 Klasifikasikan Semua Data", type="primary", use_container_width=True, disabled=(uploaded_file is None)):
+        if 'data' in st.session_state and st.session_state['data'] is not None:
+            df_features = st.session_state['data']
+            original_df = st.session_state.get('original_data', None)
             
-            # Cek apakah model memiliki predict_proba
-            if hasattr(model, 'predict_proba'):
-                prediction_proba = model.predict_proba(input_array)
-            else:
-                prediction_proba = None
-            
-            result_class = prediction[0]
-            
-            st.markdown("---")
-            st.markdown("### Hasil Klasifikasi:")
-            
-            # Tentukan label kelas (sesuaikan dengan model Anda)
-            class_labels = {
-                0: "🚗 Pengendara Normal",
-                1: "⚠️ Pengendara Agresif",
-                2: "😴 Pengendara Mengantuk",
-                3: "📱 Pengendara Terdistraksi"
-            }
-            
-            colors = {
-                0: "#2ecc71",  # Hijau
-                1: "#e74c3c",  # Merah
-                2: "#f39c12",  # Oranye
-                3: "#9b59b6"   # Ungu
-            }
-            
-            st.markdown(f"""
-            <div style="background-color: {colors.get(result_class, '#3498db')}; padding: 20px; border-radius: 10px; text-align: center;">
-                <h2 style="margin: 0; color: white;">{class_labels.get(result_class, f'Kelas {result_class}')}</h2>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if prediction_proba is not None:
-                st.markdown("### 📊 Probabilitas:")
-                proba_df = pd.DataFrame({
-                    "Kelas": [class_labels.get(i, f"Kelas {i}") for i in range(len(prediction_proba[0]))],
-                    "Probabilitas": prediction_proba[0]
+            try:
+                # Lakukan prediksi untuk semua data
+                predictions = model.predict(df_features)
+                
+                # Cek apakah model memiliki predict_proba
+                if hasattr(model, 'predict_proba'):
+                    predictions_proba = model.predict_proba(df_features)
+                else:
+                    predictions_proba = None
+                
+                # Simpan hasil prediksi
+                result_df = df_features.copy()
+                result_df['Prediction'] = predictions
+                result_df['Class'] = [class_labels.get(p, f"Kelas {p}") for p in predictions]
+                
+                # Tampilkan hasil prediksi
+                st.markdown("---")
+                st.markdown("### 📊 Hasil Klasifikasi:")
+                
+                # Ringkasan prediksi
+                pred_counts = pd.Series(predictions).value_counts()
+                st.markdown("#### Ringkasan Prediksi:")
+                
+                for class_id, count in pred_counts.items():
+                    label = class_labels.get(class_id, f"Kelas {class_id}")
+                    percentage = (count / len(predictions)) * 100
+                    st.markdown(f"- {label}: **{count}** data ({percentage:.1f}%)")
+                
+                # Tampilkan tabel hasil
+                st.markdown("#### Detail Hasil Prediksi:")
+                display_cols = ['Class'] + [col for col in df_features.columns[:5]]  # Tampilkan 5 fitur pertama
+                st.dataframe(result_df[display_cols].head(20), use_container_width=True)
+                
+                # Visualisasi distribusi prediksi
+                st.markdown("#### Distribusi Hasil Klasifikasi:")
+                chart_data = pd.DataFrame({
+                    "Kelas": [class_labels.get(i, f"Kelas {i}") for i in pred_counts.index],
+                    "Jumlah": pred_counts.values
                 })
-                st.dataframe(proba_df, use_container_width=True)
+                st.bar_chart(chart_data.set_index("Kelas"))
                 
-                st.markdown("### 📈 Visualisasi Probabilitas:")
-                st.bar_chart(proba_df.set_index("Kelas"))
+                # Jika ada probabilitas, tampilkan untuk sampel
+                if predictions_proba is not None and st.checkbox("Tampilkan probabilitas untuk setiap data"):
+                    st.markdown("#### Probabilitas per Data (5 data pertama):")
+                    proba_cols = [class_labels.get(i, f"Kelas {i}") for i in range(predictions_proba.shape[1])]
+                    proba_df = pd.DataFrame(predictions_proba[:5], columns=proba_cols)
+                    proba_df.index = [f"Data {i+1}" for i in range(len(proba_df))]
+                    st.dataframe(proba_df, use_container_width=True)
                 
-        except Exception as e:
-            st.error(f"Error saat melakukan prediksi: {e}")
+                # Tombol download hasil
+                output = result_df.copy()
+                if original_df is not None:
+                    # Gabungkan dengan data asli jika diperlukan
+                    output = original_df.copy()
+                    output['Predicted_Class'] = predictions
+                    output['Predicted_Label'] = [class_labels.get(p, f"Kelas {p}") for p in predictions]
+                
+                csv_output = output.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Download Hasil Prediksi (CSV)",
+                    data=csv_output,
+                    file_name="hasil_klasifikasi_pengendara.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+                
+            except Exception as e:
+                st.error(f"Error saat melakukan prediksi: {e}")
+        else:
+            st.warning("⚠️ Silakan upload file terlebih dahulu")
+    
+    # Prediksi untuk satu baris (opsional)
+    if uploaded_file is not None and 'data' in st.session_state and st.session_state['data'] is not None:
+        st.markdown("---")
+        st.markdown("### 🔍 Prediksi Data Tertentu")
+        
+        df_features = st.session_state['data']
+        row_index = st.number_input("Pilih nomor baris data", min_value=0, max_value=len(df_features)-1, value=0, step=1)
+        
+        if st.button("Klasifikasikan Data Ini", use_container_width=True):
+            try:
+                single_data = df_features.iloc[[row_index]]
+                prediction = model.predict(single_data)[0]
+                
+                st.markdown(f"""
+                <div style="background-color: {colors.get(prediction, '#3498db')}; padding: 20px; border-radius: 10px; text-align: center; margin-top: 10px;">
+                    <h3 style="margin: 0; color: white;">Data ke-{row_index + 1}</h3>
+                    <h2 style="margin: 10px 0 0 0; color: white;">{class_labels.get(prediction, f'Kelas {prediction}')}</h2>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if hasattr(model, 'predict_proba'):
+                    proba = model.predict_proba(single_data)[0]
+                    st.markdown("**Probabilitas:**")
+                    for i, p in enumerate(proba):
+                        st.progress(float(p), text=f"{class_labels.get(i, f'Kelas {i}')}: {p:.2%}")
+            except Exception as e:
+                st.error(f"Error: {e}")
 
 # Footer
 st.markdown("---")
